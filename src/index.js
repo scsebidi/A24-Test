@@ -5,9 +5,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+let divHeight;
+divHeight= window.setDivHeight = (height) => divHeight = height;
 root.render(
   <React.StrictMode>
-    <App />
+    <App divHeight={divHeight}/>
   </React.StrictMode>
 );
 

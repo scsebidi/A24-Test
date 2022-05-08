@@ -1,25 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState,useEffect } from 'react';
 
-function App() {
+function App(props) {
+  const [height, setHeight] = useState();
+  const { width } = useWindowDimensions();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    <div style={{margin:'auto',border:'1px solid rgba(0, 0, 0, 1)', height:props.divHeight(height) }}>
+      <span>height: {width}</span><br/>
+        Set Height: <input onKeyDown={(event) => setHeight(event.target.value)}/>
     </div>
   );
+}
+
+function getWindowDimensions() {
+  const { innerWidth: width } = window;
+  return {
+    width  
+  };
+}
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return windowDimensions;
 }
 
 export default App;
